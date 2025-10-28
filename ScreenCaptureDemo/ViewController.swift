@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import AVFoundation
 
 class ViewController: NSViewController {
 
@@ -13,8 +14,9 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
- 
-    } 
+//        MediaStream<CMSampleBuffer>(source: VideoCapture(), sinks: [MediaWriter(), AudioWriter()])
+//        MediaStream<CMSampleBuffer>(source: <#T##any CaptureSource#>, sinks: <#T##[any DataSink]#>)
+    }
     
     
     @IBAction func startAction(_ sender: Any) {

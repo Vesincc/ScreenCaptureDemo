@@ -25,6 +25,8 @@ class ScreenRecorder: NSObject {
     func startRecording() async throws {
         print("准备捕捉屏幕...")
         
+        
+        
         let content = try await SCShareableContent.excludingDesktopWindows(false, onScreenWindowsOnly: true)
         guard let display = content.displays.first else {
             throw RecorderError.noDisplay
