@@ -186,13 +186,13 @@ class MediaStream<T>: Controllable {
         
         let group = DispatchGroup()
         
-        group.enter()
-        source.stop { _ in group.leave() }
-        
         for sink in sinks {
             group.enter()
             sink.stop { _ in group.leave() }
         }
+        
+        group.enter()
+        source.stop { _ in group.leave() }
         
         group.notify(queue: .main) {
             self.stateLock.lock()

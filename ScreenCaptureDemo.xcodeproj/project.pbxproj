@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB6EE4FF2EBC8C5A0091300C /* MP4Writer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6EE4FE2EBC8C5A0091300C /* MP4Writer.swift */; };
 		BB70E8492EB0F85C00360647 /* DataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB70E8482EB0F85C00360647 /* DataFlow.swift */; };
 		BB70E84B2EB245CD00360647 /* CaptureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB70E84A2EB245CD00360647 /* CaptureType.swift */; };
 		BB70E84D2EB246E400360647 /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB70E84C2EB246E400360647 /* VideoCapture.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB6EE4FE2EBC8C5A0091300C /* MP4Writer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP4Writer.swift; sourceTree = "<group>"; };
 		BB70E8482EB0F85C00360647 /* DataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFlow.swift; sourceTree = "<group>"; };
 		BB70E84A2EB245CD00360647 /* CaptureType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureType.swift; sourceTree = "<group>"; };
 		BB70E84C2EB246E400360647 /* VideoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
@@ -75,9 +77,10 @@
 			isa = PBXGroup;
 			children = (
 				BB70E8482EB0F85C00360647 /* DataFlow.swift */,
-				BB9A6DE42EAC77B2001279F1 /* MediaStream.swift */,
 				BB70E84A2EB245CD00360647 /* CaptureType.swift */,
+				BB9A6DE42EAC77B2001279F1 /* MediaStream.swift */,
 				BB70E84C2EB246E400360647 /* VideoCapture.swift */,
+				BB6EE4FE2EBC8C5A0091300C /* MP4Writer.swift */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB6EE4FF2EBC8C5A0091300C /* MP4Writer.swift in Sources */,
 				BB9A6DDF2EAC692D001279F1 /* AppDelegate.swift in Sources */,
 				BB70E84D2EB246E400360647 /* VideoCapture.swift in Sources */,
 				BB9A6DE02EAC692D001279F1 /* ViewController.swift in Sources */,
