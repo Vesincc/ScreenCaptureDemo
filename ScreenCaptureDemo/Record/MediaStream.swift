@@ -8,6 +8,11 @@
 import AVFoundation 
 
 class MediaStream<T>: Controllable {
+    
+    enum StateError: Error {
+        case illegal
+    }
+     
     var source: CaptureSource<T>
     var sinks: [DataSink<T>]
     
@@ -48,8 +53,7 @@ class MediaStream<T>: Controllable {
         stateLock.lock()
         guard _state == .idle else {
             stateLock.unlock()
-            completion?(.failure(NSError(domain: "MediaStream", code: 1,
-                                         userInfo: [NSLocalizedDescriptionKey: "Cannot start from state \(_state)"])))
+            completion?(.failure(StateError.illegal))
             return
         }
         _state = .starting

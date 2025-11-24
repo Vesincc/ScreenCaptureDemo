@@ -22,8 +22,7 @@ class VideoCapture: CaptureSource<CMSampleBuffer> {
     private lazy var handler: VideoCaptureHandler = {
         return VideoCaptureHandler(capture: self)
     }()
-    
-    
+     
     init(source: VideoSource, deviceId: String?) {
         self.source = source
         self.deviceId = deviceId
@@ -66,6 +65,7 @@ class VideoCapture: CaptureSource<CMSampleBuffer> {
             configer.minimumFrameInterval = CMTime(value: 1, timescale: 60)
             configer.showsCursor = true
             configer.queueDepth = 6
+            configer.colorSpaceName = CGColorSpace.sRGB
             
             
             let filter = SCContentFilter(display: display, excludingWindows: [])

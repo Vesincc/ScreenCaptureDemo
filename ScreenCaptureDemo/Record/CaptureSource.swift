@@ -1,48 +1,36 @@
 //
-//  DataStream.swift
+//  CaptureType.swift
 //  ScreenCaptureDemo
 //
-//  Created by HanQi on 2025/10/28.
+//  Created by HanQi on 2025/10/29.
 //
 
 import Foundation
 
-enum ControlState {
-    case idle
-    
-    case starting
-    case running
-    
-    case pausing
-    case paused
-    
-    /// 暂停恢复中
-    case resuming
-    
-    case stopping
-    case stopped
-    
-    case error
+enum VideoSource {
+    case screen
+    case window
+    case camera
 }
 
-protocol Controllable {
-    var state: ControlState { get }
-    var error: Error? { get set }
-    
-    func start(completion: ((Result<(), Error>) -> ())?)
-    func pause(completion: ((Result<(), Error>) -> ())?)
-    func resume(completion: ((Result<(), Error>) -> ())?)
-    func stop(completion: ((Result<(), Error>) -> ())?)
+enum AudioSource {
+    case system
+    case microphone
 }
 
-extension Controllable {
-    var state: ControlState { .idle }
-    
-    func start(completion: ((Result<(), Error>) -> ())?) {}
-    func pause(completion: ((Result<(), Error>) -> ())?) {}
-    func resume(completion: ((Result<(), Error>) -> ())?) {}
-    func stop(completion: ((Result<(), Error>) -> ())?) {}
+enum InputSource {
+    case mouseMove
+    case mouseClick
+    case cursor
+    case keyboard
 }
+
+enum CaptureType {
+    case video(VideoSource)
+    case audio(AudioSource)
+    case input(InputSource)
+}
+
 
 protocol CaptureSourceProtocol: Controllable {
     associatedtype Output
@@ -50,13 +38,6 @@ protocol CaptureSourceProtocol: Controllable {
     /// 产生数据
     var onCapture: ((Output) -> ())? { get set }
 }
-
-protocol DataSinkProtocol: Controllable {
-    associatedtype Input
-    
-    /// 接收数据
-    func receive(_ input: Input) -> Bool
-} 
 
 
 class CaptureSource<T>: CaptureSourceProtocol {
@@ -73,7 +54,15 @@ class CaptureSource<T>: CaptureSourceProtocol {
     }
     func stop(completion: ((Result<(), any Error>) -> ())?) {
     }
+} 
+
+protocol DataSinkProtocol: Controllable {
+    associatedtype Input
+    
+    /// 接收数据
+    func receive(_ input: Input) -> Bool
 }
+ 
 
 class DataSink<T>: DataSinkProtocol {
     typealias Input = T
@@ -92,4 +81,3 @@ class DataSink<T>: DataSinkProtocol {
     func stop(completion: ((Result<(), any Error>) -> ())?) {
     }
 }
-

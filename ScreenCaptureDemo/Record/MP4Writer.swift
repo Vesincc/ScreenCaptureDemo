@@ -8,8 +8,7 @@
 import Foundation
 import AVFoundation
 
-class MP4Writer: DataSink<CMSampleBuffer> {
-    
+class MP4Writer: DataSink<CMSampleBuffer> { 
     
     private var writer: AVAssetWriter?
     private var input: AVAssetWriterInput?

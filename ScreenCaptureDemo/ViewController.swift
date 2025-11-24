@@ -13,7 +13,9 @@ class ViewController: NSViewController {
     let recoder = ScreenRecorder()
     
     
-    let stream = MediaStream(source: VideoCapture(source: .screen, deviceId: nil), sink: MP4Writer(outputURL: URL(fileURLWithPath: "/Users/hanqi/Desktop/test.mp4")))
+//    let stream = MediaStream(source: VideoCapture(source: .screen, deviceId: nil), sink: MP4Writer(outputURL: URL(fileURLWithPath: "/Users/hanqi/Desktop/test.mp4")))
+    
+    let session = MediaCaptureSession(workspace: MediaWorkspace(workspace: URL(fileURLWithPath: "/Users/hanqi/Desktop/test")))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +32,10 @@ class ViewController: NSViewController {
 //                print("error: \(error)")
 //            }
 //        }
-        stream.start { result in
+//        stream.start { result in
+//            print("ViewController: \(result)")
+//        }
+        session.start { result in
             print("ViewController: \(result)")
         }
     }
@@ -43,7 +48,11 @@ class ViewController: NSViewController {
 //                print("error: \(error)")
 //            }
 //        }
-        stream.stop { result in
+//        stream.stop { result in
+//            print("ViewController: \(result)")
+//        }
+        
+        session.stop { result in
             print("ViewController: \(result)")
         }
     }

@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		BB6EE4FF2EBC8C5A0091300C /* MP4Writer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6EE4FE2EBC8C5A0091300C /* MP4Writer.swift */; };
-		BB70E8492EB0F85C00360647 /* DataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB70E8482EB0F85C00360647 /* DataFlow.swift */; };
-		BB70E84B2EB245CD00360647 /* CaptureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB70E84A2EB245CD00360647 /* CaptureType.swift */; };
+		BB70E8492EB0F85C00360647 /* Controllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB70E8482EB0F85C00360647 /* Controllable.swift */; };
+		BB70E84B2EB245CD00360647 /* CaptureSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB70E84A2EB245CD00360647 /* CaptureSource.swift */; };
 		BB70E84D2EB246E400360647 /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB70E84C2EB246E400360647 /* VideoCapture.swift */; };
+		BB7F553B2ED409FD0084FCB9 /* MediaCaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7F553A2ED409FD0084FCB9 /* MediaCaptureSession.swift */; };
+		BB7F553D2ED4300C0084FCB9 /* MediaWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7F553C2ED4300C0084FCB9 /* MediaWorkspace.swift */; };
 		BB9A6DDD2EAC692D001279F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB9A6DD82EAC692D001279F1 /* Assets.xcassets */; };
 		BB9A6DDE2EAC692D001279F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB9A6DDA2EAC692D001279F1 /* Main.storyboard */; };
 		BB9A6DDF2EAC692D001279F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9A6DD72EAC692D001279F1 /* AppDelegate.swift */; };
@@ -21,9 +23,11 @@
 
 /* Begin PBXFileReference section */
 		BB6EE4FE2EBC8C5A0091300C /* MP4Writer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP4Writer.swift; sourceTree = "<group>"; };
-		BB70E8482EB0F85C00360647 /* DataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFlow.swift; sourceTree = "<group>"; };
-		BB70E84A2EB245CD00360647 /* CaptureType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureType.swift; sourceTree = "<group>"; };
+		BB70E8482EB0F85C00360647 /* Controllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controllable.swift; sourceTree = "<group>"; };
+		BB70E84A2EB245CD00360647 /* CaptureSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSource.swift; sourceTree = "<group>"; };
 		BB70E84C2EB246E400360647 /* VideoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
+		BB7F553A2ED409FD0084FCB9 /* MediaCaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCaptureSession.swift; sourceTree = "<group>"; };
+		BB7F553C2ED4300C0084FCB9 /* MediaWorkspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaWorkspace.swift; sourceTree = "<group>"; };
 		BB9A6DC62EAC691A001279F1 /* ScreenCaptureDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenCaptureDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB9A6DD72EAC692D001279F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB9A6DD82EAC692D001279F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -63,6 +67,7 @@
 		BB9A6DDC2EAC692D001279F1 /* ScreenCaptureDemo */ = {
 			isa = PBXGroup;
 			children = (
+				BB7F553C2ED4300C0084FCB9 /* MediaWorkspace.swift */,
 				BB9A6DE32EAC7793001279F1 /* Record */,
 				BB9A6DD72EAC692D001279F1 /* AppDelegate.swift */,
 				BB9A6DD82EAC692D001279F1 /* Assets.xcassets */,
@@ -76,9 +81,10 @@
 		BB9A6DE32EAC7793001279F1 /* Record */ = {
 			isa = PBXGroup;
 			children = (
-				BB70E8482EB0F85C00360647 /* DataFlow.swift */,
-				BB70E84A2EB245CD00360647 /* CaptureType.swift */,
+				BB70E8482EB0F85C00360647 /* Controllable.swift */,
+				BB70E84A2EB245CD00360647 /* CaptureSource.swift */,
 				BB9A6DE42EAC77B2001279F1 /* MediaStream.swift */,
+				BB7F553A2ED409FD0084FCB9 /* MediaCaptureSession.swift */,
 				BB70E84C2EB246E400360647 /* VideoCapture.swift */,
 				BB6EE4FE2EBC8C5A0091300C /* MP4Writer.swift */,
 			);
@@ -162,9 +168,11 @@
 				BB9A6DDF2EAC692D001279F1 /* AppDelegate.swift in Sources */,
 				BB70E84D2EB246E400360647 /* VideoCapture.swift in Sources */,
 				BB9A6DE02EAC692D001279F1 /* ViewController.swift in Sources */,
-				BB70E84B2EB245CD00360647 /* CaptureType.swift in Sources */,
+				BB70E84B2EB245CD00360647 /* CaptureSource.swift in Sources */,
 				BB9A6DE52EAC77B2001279F1 /* MediaStream.swift in Sources */,
-				BB70E8492EB0F85C00360647 /* DataFlow.swift in Sources */,
+				BB7F553D2ED4300C0084FCB9 /* MediaWorkspace.swift in Sources */,
+				BB70E8492EB0F85C00360647 /* Controllable.swift in Sources */,
+				BB7F553B2ED409FD0084FCB9 /* MediaCaptureSession.swift in Sources */,
 				BB9A6DE22EAC6944001279F1 /* ScreenRecorder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
