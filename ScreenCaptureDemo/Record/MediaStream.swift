@@ -8,27 +8,28 @@
 import AVFoundation 
 
 class MediaStream<T>: Controllable {
-    
-    enum StateError: Error {
-        case illegal
-    }
      
     var source: CaptureSource<T>
     var sinks: [DataSink<T>]
+      
+    var error: Error?
     
-    private var _state: ControlState = .idle
-    private let stateLock = NSLock()
+    var _state: ControlState = .idle
     
+    let stateLock = NSLock()
     var state: ControlState {
         stateLock.lock()
-        
-        defer {
-            stateLock.unlock()
-        }
-        return _state
+        let temp = _state
+        stateLock.unlock()
+        return temp
     }
     
-    var error: Error?
+    func setState(_ state: ControlState, error: Error? = nil) {
+        stateLock.lock()
+        _state = state
+        self.error = error
+        stateLock.unlock()
+    }
     
     convenience init(source: CaptureSource<T>, sink: DataSink<T>) {
         self.init(source: source, sinks: [sink])
@@ -50,159 +51,106 @@ class MediaStream<T>: Controllable {
     }
     
     func start(completion: ((Result<(), Error>) -> ())?) {
-        stateLock.lock()
-        guard _state == .idle else {
-            stateLock.unlock()
-            completion?(.failure(StateError.illegal))
+        guard state == .idle else {
+            completion?(.failure(ControlStateError.invalid))
             return
         }
-        _state = .starting
-        stateLock.unlock()
         
-        // 启动 source 和 sinks
-        var startError: Error?
-        let group = DispatchGroup()
+        setState(.starting)
         
-        group.enter()
-        source.start { result in
-            if case .failure(let error) = result { startError = error }
-            group.leave()
-        }
+        var nodes: [Controllable] = [source]
+        nodes.append(contentsOf: sinks)
         
-        for sink in sinks {
-            group.enter()
-            sink.start { result in
-                if case .failure(let error) = result { startError = error }
-                group.leave()
+        nodes.operateAllStreams(.start) { [weak self] result in
+            guard let self = self else {
+                completion?(.failure(ControlStateError.invalid))
+                return
             }
-        }
-        
-        group.notify(queue: .main) {
-            self.stateLock.lock()
-            if let error = startError {
-                self._state = .error
-                self.error = error
-                self.stateLock.unlock()
-                completion?(.failure(error))
-            } else {
-                self._state = .running
-                self.stateLock.unlock()
-                completion?(.success(()))
+            switch result {
+            case .success():
+                self.setState(.running)
+            case .failure(let error):
+                self.setState(.error, error: error)
             }
+            completion?(result)
         }
     }
     
     func pause(completion: ((Result<(), Error>) -> ())?) {
-        stateLock.lock()
-        guard _state == .running else {
-            stateLock.unlock()
-            completion?(.failure(NSError(domain: "MediaStream", code: 2,
-                                         userInfo: [NSLocalizedDescriptionKey: "Cannot pause from state \(_state)"])))
+        guard state == .running else {
+            completion?(.failure(ControlStateError.invalid))
             return
         }
-        _state = .pausing
-        stateLock.unlock()
         
-        var pauseError: Error?
-        let group = DispatchGroup()
+        setState(.pausing)
         
-        group.enter()
-        source.pause { result in
-            if case .failure(let error) = result { pauseError = error }
-            group.leave()
-        }
+        var nodes: [Controllable] = [source]
+        nodes.append(contentsOf: sinks)
         
-        for sink in sinks {
-            group.enter()
-            sink.pause { result in
-                if case .failure(let error) = result { pauseError = error }
-                group.leave()
+        nodes.operateAllStreams(.pause) { [weak self] result in
+            guard let self = self else {
+                completion?(.failure(ControlStateError.invalid))
+                return
             }
-        }
-        
-        group.notify(queue: .main) {
-            self.stateLock.lock()
-            if let error = pauseError {
-                self._state = .error
-                self.error = error
-                self.stateLock.unlock()
-                completion?(.failure(error))
-            } else {
-                self._state = .paused
-                self.stateLock.unlock()
-                completion?(.success(()))
+            switch result {
+            case .success():
+                self.setState(.paused)
+            case .failure(let error):
+                self.setState(.error, error: error)
             }
+            completion?(result)
         }
     }
     
     func resume(completion: ((Result<(), Error>) -> ())?) {
-        stateLock.lock()
-        guard _state == .paused else {
-            stateLock.unlock()
-            completion?(.failure(NSError(domain: "MediaStream", code: 3,
-                                         userInfo: [NSLocalizedDescriptionKey: "Cannot resume from state \(_state)"])))
+        guard state == .paused else {
+            completion?(.failure(ControlStateError.invalid))
             return
         }
-        _state = .resuming
-        stateLock.unlock()
         
-        var resumeError: Error?
-        let group = DispatchGroup()
+        setState(.resuming)
         
-        group.enter()
-        source.start { result in
-            if case .failure(let error) = result { resumeError = error }
-            group.leave()
-        }
+        var nodes: [Controllable] = [source]
+        nodes.append(contentsOf: sinks)
         
-        for sink in sinks {
-            group.enter()
-            sink.start { result in
-                if case .failure(let error) = result { resumeError = error }
-                group.leave()
+        nodes.operateAllStreams(.resume) { [weak self] result in
+            guard let self = self else {
+                completion?(.failure(ControlStateError.invalid))
+                return
             }
-        }
-        
-        group.notify(queue: .main) {
-            self.stateLock.lock()
-            if let error = resumeError {
-                self._state = .error
-                self.error = error
-                self.stateLock.unlock()
-                completion?(.failure(error))
-            } else {
-                self._state = .running
-                self.stateLock.unlock()
-                completion?(.success(()))
+            switch result {
+            case .success():
+                self.setState(.running)
+            case .failure(let error):
+                self.setState(.error, error: error)
             }
+            completion?(result)
         }
     }
     
     func stop(completion: ((Result<(), Error>) -> ())?) {
-        stateLock.lock()
-        guard _state != .stopped && _state != .idle else {
-            stateLock.unlock()
+        guard state != .idle else {
             completion?(.success(()))
             return
         }
-        _state = .stopping
-        stateLock.unlock()
         
-        let group = DispatchGroup()
+        setState(.stopping)
         
-        for sink in sinks {
-            group.enter()
-            sink.stop { _ in group.leave() }
-        }
+        var nodes: [Controllable] = [source]
+        nodes.append(contentsOf: sinks)
         
-        group.enter()
-        source.stop { _ in group.leave() }
-        
-        group.notify(queue: .main) {
-            self.stateLock.lock()
-            self._state = .stopped
-            self.stateLock.unlock()
-            completion?(.success(()))
+        nodes.operateAllStreams(.stop) { [weak self] result in
+            guard let self = self else {
+                completion?(.failure(ControlStateError.invalid))
+                return
+            }
+            switch result {
+            case .success():
+                self.setState(.stopped)
+            case .failure(let error):
+                self.setState(.error, error: error)
+            }
+            completion?(result)
         }
     }
 }

@@ -48,3 +48,63 @@ extension Controllable {
     func stop(completion: ((Result<(), Error>) -> ())?) {}
 }
 
+extension Array where Element == Controllable {
+     
+    enum ControllableOperate {
+        case start
+        case pause
+        case resume
+        case stop
+    }
+    
+    func operateAllStreams(_ operate: ControllableOperate, completion: ((Result<(), Error>) -> ())? ) {
+        guard !self.isEmpty else {
+            completion?(.success(()))
+            return
+        }
+        
+        let group = DispatchGroup()
+        var error: Error?
+        let lock = NSLock()
+        
+        for item in self {
+            
+            group.enter()
+            var op: (((Result<(), Error>) -> ())?) -> ()
+            switch operate {
+            case .start:
+                op = item.start
+            case .pause:
+                op = item.pause
+            case .resume:
+                op = item.resume
+            case .stop:
+                op = item.stop
+            }
+            
+            op { result in
+                switch result {
+                case .success():
+                    break
+                case .failure(let e):
+                    lock.lock()
+                    error = e
+                    lock.unlock()
+                }
+                group.leave()
+            }
+            
+        }
+        
+        group.notify(queue: .main) {
+            if let error = error {
+                completion?(.failure(error))
+            } else {
+                completion?(.success(()))
+            }
+        }
+        
+    }
+
+    
+}

@@ -1,5 +1,5 @@
 //
-//  VideoCapture.swift
+//  ScreenCapture.swift
 //  ScreenCaptureDemo
 //
 //  Created by HanQi on 2025/10/29.
@@ -8,28 +8,29 @@
 import AVFoundation
 import ScreenCaptureKit
 
-class VideoCapture: CaptureSource<CMSampleBuffer> {
+class ScreenCapture: CaptureSource<CMSampleBuffer> {
     
-    let source: VideoSource
+    let source: ScreenSource
     
     let deviceId: String?
+     
+    private let captureQueue = DispatchQueue(label: "ScreenCapture.CaptureQueue", qos: .userInteractive)
      
      
     private var stream: SCStream?
     private var display: SCDisplay?
     
-    private let captureQueue = DispatchQueue(label: "VideoCapture.CaptureQueue", qos: .userInteractive)
     private lazy var handler: VideoCaptureHandler = {
         return VideoCaptureHandler(capture: self)
     }()
      
-    init(source: VideoSource, deviceId: String?) {
+    init(source: ScreenSource, deviceId: String?) {
         self.source = source
         self.deviceId = deviceId
         super.init()
     }
     
-    override func start(completion: ((Result<(), any Error>) -> ())?) {
+    func start(completion: ((Result<(), any Error>) -> ())?) {
         print("准备捕捉屏幕...")
         SCShareableContent.getExcludingDesktopWindows(false, onScreenWindowsOnly: true) { content, error in
             if let error = error {
@@ -91,11 +92,11 @@ class VideoCapture: CaptureSource<CMSampleBuffer> {
         }
     }
     
-    override func pause(completion: ((Result<(), any Error>) -> ())?) {
+    func pause(completion: ((Result<(), any Error>) -> ())?) {
         
     }
     
-    override func stop(completion: ((Result<(), any Error>) -> ())?) {
+    func stop(completion: ((Result<(), any Error>) -> ())?) {
         guard let stream = self.stream else {
             completion?(.failure(NSError(domain: "VideoCapture", code: -1, userInfo: [NSLocalizedDescriptionKey: "Stream not started"])))
             return
@@ -117,12 +118,12 @@ class VideoCapture: CaptureSource<CMSampleBuffer> {
     
 }
 
-extension VideoCapture {
+extension ScreenCapture {
     
     private class VideoCaptureHandler: NSObject, SCStreamDelegate, SCStreamOutput {
-        weak var capture: VideoCapture?
+        weak var capture: ScreenCapture?
         
-        init(capture: VideoCapture? = nil) {
+        init(capture: ScreenCapture? = nil) {
             self.capture = capture
         }
         

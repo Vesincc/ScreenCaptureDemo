@@ -49,8 +49,7 @@ class MediaCaptureSession {
     var streams: [Controllable] = []
     
     weak var delegate: MediaCaptureSessionDelegate?
-    
-    
+     
     init(workspace: MediaWorkspace) {
         self.workspace = workspace
     }
@@ -59,72 +58,11 @@ class MediaCaptureSession {
         streams.removeAll()
         
         let screenOutput = workspace.captureUrl(for: .screen, checkExist: false)!
-        let screen = MediaStream(source: VideoCapture(source: .screen, deviceId: nil), sink: MP4Writer(outputURL: screenOutput))
+        let screen = MediaStream(source: ScreenCapture(source: .screen, deviceId: nil), sink: MP4Writer(outputURL: screenOutput))
         streams.append(screen)
     }
     
-}
-
-private extension MediaCaptureSession {
-    
-    enum StreamOperate {
-        case start
-        case pause
-        case resume
-        case stop
-    }
-     
-    func operateAllStreams(_ operate: StreamOperate, completion: ((Result<(), Error>) -> ())? ) {
-        guard !streams.isEmpty else {
-            completion?(.success(()))
-            return
-        }
-        
-        let group = DispatchGroup()
-        var error: Error?
-        let lock = NSLock()
-        
-        for stream in streams {
-            
-            group.enter()
-            var op: (((Result<(), Error>) -> ())?) -> ()
-            switch operate {
-            case .start:
-                op = stream.start
-            case .pause:
-                op = stream.pause
-            case .resume:
-                op = stream.resume
-            case .stop:
-                op = stream.stop
-            }
-            
-            op { result in
-                switch result {
-                case .success():
-                    break
-                case .failure(let e):
-                    lock.lock()
-                    error = e
-                    lock.unlock()
-                }
-                group.leave()
-            }
-            
-        }
-        
-        group.notify(queue: .main) {
-            if let error = error {
-                completion?(.failure(error))
-            } else {
-                completion?(.success(()))
-            }
-        }
-        
-    }
-    
-}
-
+} 
 
 extension MediaCaptureSession: Controllable {
     
@@ -153,7 +91,7 @@ extension MediaCaptureSession: Controllable {
             initStreams()
             
             /// 启动
-            operateAllStreams(.start) { result in
+            streams.operateAllStreams(.start) { result in
                 switch result {
                 case .success():
                     self.setState(.running)
@@ -174,7 +112,7 @@ extension MediaCaptureSession: Controllable {
         
         setState(.pausing)
         
-        operateAllStreams(.pause) { [weak self] result in
+        streams.operateAllStreams(.pause) { [weak self] result in
             guard let self = self else {
                 completion?(.failure(SessionError.released))
                 return
@@ -197,7 +135,7 @@ extension MediaCaptureSession: Controllable {
         
         setState(.resuming)
         
-        operateAllStreams(.resume) { [weak self] result in
+        streams.operateAllStreams(.resume) { [weak self] result in
             guard let self = self else {
                 completion?(.failure(SessionError.released))
                 return
@@ -221,7 +159,7 @@ extension MediaCaptureSession: Controllable {
         
         setState(.stopping)
         
-        operateAllStreams(.stop) { [weak self] result in
+        streams.operateAllStreams(.stop) { [weak self] result in
             guard let self = self else {
                 completion?(.failure(SessionError.released))
                 return

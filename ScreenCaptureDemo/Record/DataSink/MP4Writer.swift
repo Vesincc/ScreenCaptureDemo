@@ -13,8 +13,7 @@ class MP4Writer: DataSink<CMSampleBuffer> {
     private var writer: AVAssetWriter?
     private var input: AVAssetWriterInput?
     private var adaptor: AVAssetWriterInputPixelBufferAdaptor?
-
-
+ 
     private let writingQueue = DispatchQueue(label: "MP4Writer.queue", qos: .userInitiated)
  
     private let outputURL: URL
@@ -25,7 +24,7 @@ class MP4Writer: DataSink<CMSampleBuffer> {
         self.outputURL = outputURL
     }
     
-    override func start(completion: ((Result<(), any Error>) -> ())?) {
+    func start(completion: ((Result<(), any Error>) -> ())?) {
         writingQueue.async {
             do {
                 try? FileManager.default.removeItem(at: self.outputURL)
@@ -34,10 +33,10 @@ class MP4Writer: DataSink<CMSampleBuffer> {
                 
                 let videoSettings: [String: Any] = [
                     AVVideoCodecKey: AVVideoCodecType.h264,
-                    AVVideoWidthKey: 5120,
-                    AVVideoHeightKey: 2880,
+                    AVVideoWidthKey: 3840,
+                    AVVideoHeightKey: 2160,
                     AVVideoCompressionPropertiesKey: [
-                        AVVideoAverageBitRateKey: 8_000_000,
+                        AVVideoAverageBitRateKey: 45_000_000,
                         AVVideoMaxKeyFrameIntervalKey: 60
                     ]
                 ]
@@ -104,11 +103,11 @@ class MP4Writer: DataSink<CMSampleBuffer> {
     }
     
     
-    override func pause(completion: ((Result<(), any Error>) -> ())?) {
+    func pause(completion: ((Result<(), any Error>) -> ())?) {
         
     }
     
-    override func stop(completion: ((Result<(), any Error>) -> ())?) {
+    func stop(completion: ((Result<(), any Error>) -> ())?) {
         writingQueue.async {
             guard let writer = self.writer, let input = self.input else {
                 completion?(.failure(NSError(domain: "MP4Writer", code: -1, userInfo: [NSLocalizedDescriptionKey: "Writer not initialized"])))
