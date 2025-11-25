@@ -5,7 +5,7 @@
 //  Created by HanQi on 2025/11/24.
 //
 
-import Foundation
+import AppKit
 
 protocol MediaCaptureSessionDelegate: NSObjectProtocol {
     func MediaCaptureSession(_ session: MediaCaptureSession, didChangeState: ControlState)
@@ -58,7 +58,7 @@ class MediaCaptureSession {
         streams.removeAll()
         
         let screenOutput = workspace.captureUrl(for: .screen, checkExist: false)!
-        let screen = MediaStream(source: ScreenCapture(source: .screen, deviceId: nil), sink: MP4Writer(outputURL: screenOutput))
+        let screen = MediaStream(source: ScreenCapture(source: .screen(displayID: NSScreen.main?.displayID)), sink: MP4Writer(outputURL: screenOutput))
         streams.append(screen)
     }
     

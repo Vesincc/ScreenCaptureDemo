@@ -7,11 +7,6 @@
 
 import Foundation
 
-enum ScreenSource {
-    case screen
-    case window
-    case camera
-}
 
 enum AudioSource {
     case system
