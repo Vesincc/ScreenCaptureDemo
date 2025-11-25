@@ -40,12 +40,7 @@ protocol Controllable {
 }
 
 extension Controllable {
-    var state: ControlState { .idle }
-    
-    func start(completion: ((Result<(), Error>) -> ())?) {}
-    func pause(completion: ((Result<(), Error>) -> ())?) {}
-    func resume(completion: ((Result<(), Error>) -> ())?) {}
-    func stop(completion: ((Result<(), Error>) -> ())?) {}
+    var state: ControlState { .idle } 
 }
 
 extension Array where Element == Controllable {

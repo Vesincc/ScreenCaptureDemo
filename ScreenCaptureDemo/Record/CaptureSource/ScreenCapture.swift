@@ -30,7 +30,7 @@ class ScreenCapture: CaptureSource<CMSampleBuffer> {
         super.init()
     }
     
-    func start(completion: ((Result<(), any Error>) -> ())?) {
+    override func start(completion: ((Result<(), any Error>) -> ())?) {
         print("准备捕捉屏幕...")
         SCShareableContent.getExcludingDesktopWindows(false, onScreenWindowsOnly: true) { content, error in
             if let error = error {
@@ -92,11 +92,11 @@ class ScreenCapture: CaptureSource<CMSampleBuffer> {
         }
     }
     
-    func pause(completion: ((Result<(), any Error>) -> ())?) {
+    override func pause(completion: ((Result<(), any Error>) -> ())?) {
         
     }
     
-    func stop(completion: ((Result<(), any Error>) -> ())?) {
+    override func stop(completion: ((Result<(), any Error>) -> ())?) {
         guard let stream = self.stream else {
             completion?(.failure(NSError(domain: "VideoCapture", code: -1, userInfo: [NSLocalizedDescriptionKey: "Stream not started"])))
             return

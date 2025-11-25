@@ -24,7 +24,7 @@ class MP4Writer: DataSink<CMSampleBuffer> {
         self.outputURL = outputURL
     }
     
-    func start(completion: ((Result<(), any Error>) -> ())?) {
+    override func start(completion: ((Result<(), any Error>) -> ())?) {
         writingQueue.async {
             do {
                 try? FileManager.default.removeItem(at: self.outputURL)
@@ -103,11 +103,11 @@ class MP4Writer: DataSink<CMSampleBuffer> {
     }
     
     
-    func pause(completion: ((Result<(), any Error>) -> ())?) {
+    override func pause(completion: ((Result<(), any Error>) -> ())?) {
         
     }
     
-    func stop(completion: ((Result<(), any Error>) -> ())?) {
+    override func stop(completion: ((Result<(), any Error>) -> ())?) {
         writingQueue.async {
             guard let writer = self.writer, let input = self.input else {
                 completion?(.failure(NSError(domain: "MP4Writer", code: -1, userInfo: [NSLocalizedDescriptionKey: "Writer not initialized"])))

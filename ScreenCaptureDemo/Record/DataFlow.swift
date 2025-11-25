@@ -25,7 +25,12 @@ class CaptureSource<T>: CaptureSourceProtocol {
     typealias Output = T
     var error: Error?
     
-    var onCapture: ((T) -> ())? 
+    var onCapture: ((T) -> ())?
+    
+    func start(completion: ((Result<(), Error>) -> ())?) {}
+    func pause(completion: ((Result<(), Error>) -> ())?) {}
+    func resume(completion: ((Result<(), Error>) -> ())?) {}
+    func stop(completion: ((Result<(), Error>) -> ())?) {}
 }
 
 class DataSink<T>: DataSinkProtocol {
@@ -35,4 +40,9 @@ class DataSink<T>: DataSinkProtocol {
     func receive(_ input: T) -> Bool {
         true
     }
+    
+    func start(completion: ((Result<(), Error>) -> ())?) {}
+    func pause(completion: ((Result<(), Error>) -> ())?) {}
+    func resume(completion: ((Result<(), Error>) -> ())?) {}
+    func stop(completion: ((Result<(), Error>) -> ())?) {}
 }
