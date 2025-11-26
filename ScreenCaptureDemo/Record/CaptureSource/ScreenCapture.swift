@@ -79,20 +79,10 @@ class ScreenCapture: CaptureSource<CMSampleBuffer> {
     let configuration: ScreenCaptureConfiguration
     let contentProvider: DefaultScreenContentProvider
      
-    private let captureQueue = DispatchQueue(label: "ScreenCapture.CaptureQueue", qos: .userInteractive)
+    private let queue = DispatchQueue(label: "ScreenCapture.queue", qos: .userInteractive)
       
     private var stream: SCStream?
     private var display: SCDisplay?
-    
-    // 状态管理
-    private let stateLock = NSLock()
-    private var _state: ControlState = .idle
-    var state: ControlState {
-        stateLock.lock()
-        defer { stateLock.unlock() }
-        return _state
-    }
-    
     
     private lazy var handler: VideoCaptureHandler = {
         return VideoCaptureHandler(capture: self)
@@ -114,13 +104,6 @@ class ScreenCapture: CaptureSource<CMSampleBuffer> {
         super.init()
     }
     
-    private func setState(_ newState: ControlState, error: Error? = nil) {
-        stateLock.lock()
-        _state = newState
-        self.error = error
-        stateLock.unlock()
-    }
-    
     private func createStreamConfiguration(for display: SCDisplay) -> SCStreamConfiguration {
         let config = SCStreamConfiguration()
         configuration.apply(to: config, display: display)
@@ -136,7 +119,7 @@ class ScreenCapture: CaptureSource<CMSampleBuffer> {
         let filter = createContentFilter(for: display)
         
         let stream = SCStream(filter: filter, configuration: config, delegate: handler)
-        try stream.addStreamOutput(handler, type: .screen, sampleHandlerQueue: captureQueue)
+        try stream.addStreamOutput(handler, type: .screen, sampleHandlerQueue: queue)
         
         self.stream = stream
         self.display = display
@@ -198,26 +181,7 @@ class ScreenCapture: CaptureSource<CMSampleBuffer> {
             
         }
          
-    }
-    
-    override func pause(completion: ((Result<(), any Error>) -> ())?) {
-        guard state == .running else {
-            completion?(.failure(ControlStateError.invalid))
-            return
-        }
-        setState(.paused)
-        completion?(.success(()))
-    }
-    
-    override func resume(completion: ((Result<(), any Error>) -> ())?) {
-        guard state == .paused else {
-            completion?(.failure(ControlStateError.invalid))
-            return
-        }
-        
-        setState(.running)
-        completion?(.success(()))
-    }
+    } 
     
     override func stop(completion: ((Result<(), any Error>) -> ())?) {
         guard state != .idle else {

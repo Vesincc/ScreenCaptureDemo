@@ -12,22 +12,26 @@ class ViewController: NSViewController {
 
     let recoder = ScreenRecorder()
      
-    let session = MediaCaptureSession(workspace: MediaWorkspace(workspace: URL(fileURLWithPath: "/Users/hanqi/Desktop/test")))
+    var session: MediaCaptureSession?
+    
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad() 
+        
     }
     
     
     @IBAction func startAction(_ sender: Any) {
-        session.start { result in
+        session = MediaCaptureSession(workspace: MediaWorkspace(workspace: URL(fileURLWithPath: "/Users/hanqi/Desktop/test")))
+        session?.start { result in
             print("ViewController: \(result)")
         }
     }
     
     @IBAction func stopAction(_ sender: Any) {
-        session.stop { result in
+        session?.stop { [weak self] result in
             print("ViewController: \(result)")
+            self?.session = nil
         }
     }
     

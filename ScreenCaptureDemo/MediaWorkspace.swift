@@ -23,6 +23,9 @@ extension MediaWorkspace {
     /// 录制文件名字
     enum MediaFileName: String {
         case screen = "screen.mp4"
+        
+        case mouseMove = "mouse_moves.jsonl"
+        case mouseClick = "mouse_clicks.jsonl"
     }
     
     /// 录制目录

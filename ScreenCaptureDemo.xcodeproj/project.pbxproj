@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BB6ACBC82ED55E3C001FFDBE /* MediaSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6ACBC72ED55E3C001FFDBE /* MediaSource.swift */; };
+		BB6ACBCA2ED5A9B6001FFDBE /* MouseEventCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6ACBC92ED5A9B6001FFDBE /* MouseEventCapture.swift */; };
+		BB6ACBCC2ED5AA19001FFDBE /* JSONLineWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6ACBCB2ED5AA19001FFDBE /* JSONLineWriter.swift */; };
 		BB6EE4FF2EBC8C5A0091300C /* MP4Writer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6EE4FE2EBC8C5A0091300C /* MP4Writer.swift */; };
 		BB70E8492EB0F85C00360647 /* Controllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB70E8482EB0F85C00360647 /* Controllable.swift */; };
 		BB70E84B2EB245CD00360647 /* DataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB70E84A2EB245CD00360647 /* DataFlow.swift */; };
@@ -23,7 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BB6ACBC72ED55E3C001FFDBE /* MediaSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaSource.swift; sourceTree = "<group>"; };
+		BB6ACBC92ED5A9B6001FFDBE /* MouseEventCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseEventCapture.swift; sourceTree = "<group>"; };
+		BB6ACBCB2ED5AA19001FFDBE /* JSONLineWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLineWriter.swift; sourceTree = "<group>"; };
 		BB6EE4FE2EBC8C5A0091300C /* MP4Writer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP4Writer.swift; sourceTree = "<group>"; };
 		BB70E8482EB0F85C00360647 /* Controllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controllable.swift; sourceTree = "<group>"; };
 		BB70E84A2EB245CD00360647 /* DataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFlow.swift; sourceTree = "<group>"; };
@@ -53,8 +55,8 @@
 		BB6ACBC52ED55DE5001FFDBE /* CaptureSource */ = {
 			isa = PBXGroup;
 			children = (
-				BB6ACBC72ED55E3C001FFDBE /* MediaSource.swift */,
 				BB70E84C2EB246E400360647 /* ScreenCapture.swift */,
+				BB6ACBC92ED5A9B6001FFDBE /* MouseEventCapture.swift */,
 			);
 			path = CaptureSource;
 			sourceTree = "<group>";
@@ -63,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				BB6EE4FE2EBC8C5A0091300C /* MP4Writer.swift */,
+				BB6ACBCB2ED5AA19001FFDBE /* JSONLineWriter.swift */,
 			);
 			path = DataSink;
 			sourceTree = "<group>";
@@ -187,7 +190,8 @@
 				BB9A6DDF2EAC692D001279F1 /* AppDelegate.swift in Sources */,
 				BB70E84D2EB246E400360647 /* ScreenCapture.swift in Sources */,
 				BB9A6DE02EAC692D001279F1 /* ViewController.swift in Sources */,
-				BB6ACBC82ED55E3C001FFDBE /* MediaSource.swift in Sources */,
+				BB6ACBCC2ED5AA19001FFDBE /* JSONLineWriter.swift in Sources */,
+				BB6ACBCA2ED5A9B6001FFDBE /* MouseEventCapture.swift in Sources */,
 				BB70E84B2EB245CD00360647 /* DataFlow.swift in Sources */,
 				BB9A6DE52EAC77B2001279F1 /* MediaStream.swift in Sources */,
 				BB7F553D2ED4300C0084FCB9 /* MediaWorkspace.swift in Sources */,

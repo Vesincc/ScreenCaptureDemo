@@ -60,6 +60,15 @@ class MediaCaptureSession {
         let screenOutput = workspace.captureUrl(for: .screen, checkExist: false)!
         let screen = MediaStream(source: ScreenCapture(source: .screen(displayID: NSScreen.main?.displayID)), sink: MP4Writer(outputURL: screenOutput))
         streams.append(screen)
+        
+        let mouseMoveOutput = workspace.captureUrl(for: .mouseMove, checkExist: false)!
+        let mouseMove = MediaStream(source: MouseEventCapture(captureType: .move), sink: JSONLineWriter(outputURL: mouseMoveOutput))
+        streams.append(mouseMove)
+        
+        let mouseClickOutput = workspace.captureUrl(for: .mouseClick, checkExist: false)!
+        let mouseClick = MediaStream(source: MouseEventCapture(captureType: .click), sink: JSONLineWriter(outputURL: mouseClickOutput))
+        streams.append(mouseClick)
+        
     }
     
 } 

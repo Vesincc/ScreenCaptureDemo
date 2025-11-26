@@ -26,11 +26,55 @@ class CaptureSource<T>: CaptureSourceProtocol {
     var error: Error?
     
     var onCapture: ((T) -> ())?
+     
+    private let stateLock = NSLock()
+    private var _state: ControlState = .idle
+    var state: ControlState {
+        stateLock.lock()
+        defer { stateLock.unlock() }
+        return _state
+    }
     
-    func start(completion: ((Result<(), Error>) -> ())?) {}
-    func pause(completion: ((Result<(), Error>) -> ())?) {}
-    func resume(completion: ((Result<(), Error>) -> ())?) {}
-    func stop(completion: ((Result<(), Error>) -> ())?) {}
+    func setState(_ newState: ControlState, error: Error? = nil) {
+        stateLock.lock()
+        _state = newState
+        self.error = error
+        stateLock.unlock()
+    } 
+    
+    func start(completion: ((Result<(), Error>) -> ())?) {
+        guard state == .idle else {
+            completion?(.failure(ControlStateError.invalid))
+            return
+        }
+        setState(.running)
+        completion?(.success(()))
+    }
+    func pause(completion: ((Result<(), Error>) -> ())?) {
+        guard state == .running else {
+            completion?(.failure(ControlStateError.invalid))
+            return
+        }
+        setState(.paused)
+        completion?(.success(()))
+    }
+    func resume(completion: ((Result<(), Error>) -> ())?) {
+        guard state == .paused else {
+            completion?(.failure(ControlStateError.invalid))
+            return
+        }
+        
+        setState(.running)
+        completion?(.success(()))
+    }
+    func stop(completion: ((Result<(), Error>) -> ())?) {
+        guard state != .idle else {
+            completion?(.failure(ControlStateError.invalid))
+            return
+        }
+        setState(.stopped)
+        completion?(.success(()))
+    }
 }
 
 class DataSink<T>: DataSinkProtocol {
@@ -41,8 +85,52 @@ class DataSink<T>: DataSinkProtocol {
         true
     }
     
-    func start(completion: ((Result<(), Error>) -> ())?) {}
-    func pause(completion: ((Result<(), Error>) -> ())?) {}
-    func resume(completion: ((Result<(), Error>) -> ())?) {}
-    func stop(completion: ((Result<(), Error>) -> ())?) {}
+    private let stateLock = NSLock()
+    private var _state: ControlState = .idle
+    var state: ControlState {
+        stateLock.lock()
+        defer { stateLock.unlock() }
+        return _state
+    }
+    
+    func setState(_ newState: ControlState, error: Error? = nil) {
+        stateLock.lock()
+        _state = newState
+        self.error = error
+        stateLock.unlock()
+    }
+    
+    func start(completion: ((Result<(), Error>) -> ())?) {
+        guard state == .idle else {
+            completion?(.failure(ControlStateError.invalid))
+            return
+        }
+        setState(.running)
+        completion?(.success(()))
+    }
+    func pause(completion: ((Result<(), Error>) -> ())?) {
+        guard state == .running else {
+            completion?(.failure(ControlStateError.invalid))
+            return
+        }
+        setState(.paused)
+        completion?(.success(()))
+    }
+    func resume(completion: ((Result<(), Error>) -> ())?) {
+        guard state == .paused else {
+            completion?(.failure(ControlStateError.invalid))
+            return
+        }
+        
+        setState(.running)
+        completion?(.success(()))
+    }
+    func stop(completion: ((Result<(), Error>) -> ())?) {
+        guard state != .idle else {
+            completion?(.failure(ControlStateError.invalid))
+            return
+        }
+        setState(.stopped)
+        completion?(.success(()))
+    }
 }
