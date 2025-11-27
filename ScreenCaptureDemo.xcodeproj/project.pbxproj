@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		BB6ACBCA2ED5A9B6001FFDBE /* MouseEventCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6ACBC92ED5A9B6001FFDBE /* MouseEventCapture.swift */; };
 		BB6ACBCC2ED5AA19001FFDBE /* JSONLineWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6ACBCB2ED5AA19001FFDBE /* JSONLineWriter.swift */; };
+		BB6ACBCE2ED6EF53001FFDBE /* AudioCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6ACBCD2ED6EF53001FFDBE /* AudioCapture.swift */; };
+		BB6ACBD02ED7FF7B001FFDBE /* MouseEventWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6ACBCF2ED7FF7B001FFDBE /* MouseEventWriter.swift */; };
+		BB6ACBD22ED82778001FFDBE /* CursorImageWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6ACBD12ED82778001FFDBE /* CursorImageWriter.swift */; };
 		BB6EE4FF2EBC8C5A0091300C /* MP4Writer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6EE4FE2EBC8C5A0091300C /* MP4Writer.swift */; };
 		BB70E8492EB0F85C00360647 /* Controllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB70E8482EB0F85C00360647 /* Controllable.swift */; };
 		BB70E84B2EB245CD00360647 /* DataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB70E84A2EB245CD00360647 /* DataFlow.swift */; };
@@ -26,6 +29,9 @@
 /* Begin PBXFileReference section */
 		BB6ACBC92ED5A9B6001FFDBE /* MouseEventCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseEventCapture.swift; sourceTree = "<group>"; };
 		BB6ACBCB2ED5AA19001FFDBE /* JSONLineWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLineWriter.swift; sourceTree = "<group>"; };
+		BB6ACBCD2ED6EF53001FFDBE /* AudioCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCapture.swift; sourceTree = "<group>"; };
+		BB6ACBCF2ED7FF7B001FFDBE /* MouseEventWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseEventWriter.swift; sourceTree = "<group>"; };
+		BB6ACBD12ED82778001FFDBE /* CursorImageWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorImageWriter.swift; sourceTree = "<group>"; };
 		BB6EE4FE2EBC8C5A0091300C /* MP4Writer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP4Writer.swift; sourceTree = "<group>"; };
 		BB70E8482EB0F85C00360647 /* Controllable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controllable.swift; sourceTree = "<group>"; };
 		BB70E84A2EB245CD00360647 /* DataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFlow.swift; sourceTree = "<group>"; };
@@ -56,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				BB70E84C2EB246E400360647 /* ScreenCapture.swift */,
+				BB6ACBCD2ED6EF53001FFDBE /* AudioCapture.swift */,
 				BB6ACBC92ED5A9B6001FFDBE /* MouseEventCapture.swift */,
 			);
 			path = CaptureSource;
@@ -66,6 +73,8 @@
 			children = (
 				BB6EE4FE2EBC8C5A0091300C /* MP4Writer.swift */,
 				BB6ACBCB2ED5AA19001FFDBE /* JSONLineWriter.swift */,
+				BB6ACBCF2ED7FF7B001FFDBE /* MouseEventWriter.swift */,
+				BB6ACBD12ED82778001FFDBE /* CursorImageWriter.swift */,
 			);
 			path = DataSink;
 			sourceTree = "<group>";
@@ -189,15 +198,18 @@
 				BB6EE4FF2EBC8C5A0091300C /* MP4Writer.swift in Sources */,
 				BB9A6DDF2EAC692D001279F1 /* AppDelegate.swift in Sources */,
 				BB70E84D2EB246E400360647 /* ScreenCapture.swift in Sources */,
+				BB6ACBD02ED7FF7B001FFDBE /* MouseEventWriter.swift in Sources */,
 				BB9A6DE02EAC692D001279F1 /* ViewController.swift in Sources */,
 				BB6ACBCC2ED5AA19001FFDBE /* JSONLineWriter.swift in Sources */,
 				BB6ACBCA2ED5A9B6001FFDBE /* MouseEventCapture.swift in Sources */,
 				BB70E84B2EB245CD00360647 /* DataFlow.swift in Sources */,
 				BB9A6DE52EAC77B2001279F1 /* MediaStream.swift in Sources */,
 				BB7F553D2ED4300C0084FCB9 /* MediaWorkspace.swift in Sources */,
+				BB6ACBCE2ED6EF53001FFDBE /* AudioCapture.swift in Sources */,
 				BB70E8492EB0F85C00360647 /* Controllable.swift in Sources */,
 				BB7F553B2ED409FD0084FCB9 /* MediaCaptureSession.swift in Sources */,
 				BB9A6DE22EAC6944001279F1 /* ScreenRecorder.swift in Sources */,
+				BB6ACBD22ED82778001FFDBE /* CursorImageWriter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

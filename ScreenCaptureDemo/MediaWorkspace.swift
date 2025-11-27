@@ -26,6 +26,7 @@ extension MediaWorkspace {
         
         case mouseMove = "mouse_moves.jsonl"
         case mouseClick = "mouse_clicks.jsonl"
+        case cursorFolder = "cursor"
     }
     
     /// 录制目录

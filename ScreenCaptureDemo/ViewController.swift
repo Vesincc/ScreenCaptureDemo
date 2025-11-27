@@ -17,7 +17,7 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad() 
-        
+        print("devices: \(AVCaptureDevice.default(for: .audio))")
     }
     
     

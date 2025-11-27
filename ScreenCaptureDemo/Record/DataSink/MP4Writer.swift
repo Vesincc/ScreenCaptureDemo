@@ -101,8 +101,7 @@ class MP4Writer: DataSink<CMSampleBuffer> {
         
         return true
     }
-     
-    
+      
     override func stop(completion: ((Result<(), any Error>) -> ())?) {
         writingQueue.async {
             guard let writer = self.writer, let input = self.input else {
