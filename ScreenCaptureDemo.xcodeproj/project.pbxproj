@@ -24,6 +24,15 @@
 		BB9A6DE02EAC692D001279F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9A6DDB2EAC692D001279F1 /* ViewController.swift */; };
 		BB9A6DE22EAC6944001279F1 /* ScreenRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9A6DE12EAC6944001279F1 /* ScreenRecorder.swift */; };
 		BB9A6DE52EAC77B2001279F1 /* MediaStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9A6DE42EAC77B2001279F1 /* MediaStream.swift */; };
+		BBA9716E2F0CA956001672B0 /* NewRecordWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA9716D2F0CA956001672B0 /* NewRecordWindowController.swift */; };
+		BBA971702F0CA964001672B0 /* NewRecord.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBA9716F2F0CA964001672B0 /* NewRecord.storyboard */; };
+		BBA971722F0CB106001672B0 /* AppWindowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA971712F0CB106001672B0 /* AppWindowCoordinator.swift */; };
+		BBA971742F0CB916001672B0 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA971732F0CB916001672B0 /* MainWindowController.swift */; };
+		BBA971772F0CBB20001672B0 /* ConeMacKit in Frameworks */ = {isa = PBXBuildFile; productRef = BBA971762F0CBB20001672B0 /* ConeMacKit */; };
+		BBA971792F0CBBE0001672B0 /* NewRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA971782F0CBBE0001672B0 /* NewRecordViewController.swift */; };
+		BBA9717D2F0CE688001672B0 /* CaptureSelectionContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA9717C2F0CE688001672B0 /* CaptureSelectionContext.swift */; };
+		BBA9717F2F0CEB14001672B0 /* SelectionWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA9717E2F0CEB14001672B0 /* SelectionWindow.swift */; };
+		BBA971812F0CF8D5001672B0 /* SelectionOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA971802F0CF8D5001672B0 /* SelectionOverlayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +54,14 @@
 		BB9A6DDB2EAC692D001279F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BB9A6DE12EAC6944001279F1 /* ScreenRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenRecorder.swift; sourceTree = "<group>"; };
 		BB9A6DE42EAC77B2001279F1 /* MediaStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStream.swift; sourceTree = "<group>"; };
+		BBA9716D2F0CA956001672B0 /* NewRecordWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRecordWindowController.swift; sourceTree = "<group>"; };
+		BBA9716F2F0CA964001672B0 /* NewRecord.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NewRecord.storyboard; sourceTree = "<group>"; };
+		BBA971712F0CB106001672B0 /* AppWindowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindowCoordinator.swift; sourceTree = "<group>"; };
+		BBA971732F0CB916001672B0 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		BBA971782F0CBBE0001672B0 /* NewRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRecordViewController.swift; sourceTree = "<group>"; };
+		BBA9717C2F0CE688001672B0 /* CaptureSelectionContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSelectionContext.swift; sourceTree = "<group>"; };
+		BBA9717E2F0CEB14001672B0 /* SelectionWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionWindow.swift; sourceTree = "<group>"; };
+		BBA971802F0CF8D5001672B0 /* SelectionOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionOverlayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBA971772F0CBB20001672B0 /* ConeMacKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,10 +116,13 @@
 		BB9A6DDC2EAC692D001279F1 /* ScreenCaptureDemo */ = {
 			isa = PBXGroup;
 			children = (
+				BBA971712F0CB106001672B0 /* AppWindowCoordinator.swift */,
+				BBA9716C2F0CA8F8001672B0 /* NewRecord */,
 				BB7F553C2ED4300C0084FCB9 /* MediaWorkspace.swift */,
 				BB9A6DE32EAC7793001279F1 /* Record */,
 				BB9A6DD72EAC692D001279F1 /* AppDelegate.swift */,
 				BB9A6DD82EAC692D001279F1 /* Assets.xcassets */,
+				BBA971732F0CB916001672B0 /* MainWindowController.swift */,
 				BB9A6DDA2EAC692D001279F1 /* Main.storyboard */,
 				BB9A6DDB2EAC692D001279F1 /* ViewController.swift */,
 				BB9A6DE12EAC6944001279F1 /* ScreenRecorder.swift */,
@@ -122,6 +143,27 @@
 			path = Record;
 			sourceTree = "<group>";
 		};
+		BBA9716C2F0CA8F8001672B0 /* NewRecord */ = {
+			isa = PBXGroup;
+			children = (
+				BBA9717B2F0CE5E7001672B0 /* CaptureSelection */,
+				BBA9716F2F0CA964001672B0 /* NewRecord.storyboard */,
+				BBA9716D2F0CA956001672B0 /* NewRecordWindowController.swift */,
+				BBA971782F0CBBE0001672B0 /* NewRecordViewController.swift */,
+			);
+			path = NewRecord;
+			sourceTree = "<group>";
+		};
+		BBA9717B2F0CE5E7001672B0 /* CaptureSelection */ = {
+			isa = PBXGroup;
+			children = (
+				BBA9717C2F0CE688001672B0 /* CaptureSelectionContext.swift */,
+				BBA9717E2F0CEB14001672B0 /* SelectionWindow.swift */,
+				BBA971802F0CF8D5001672B0 /* SelectionOverlayView.swift */,
+			);
+			path = CaptureSelection;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -139,6 +181,7 @@
 			);
 			name = ScreenCaptureDemo;
 			packageProductDependencies = (
+				BBA971762F0CBB20001672B0 /* ConeMacKit */,
 			);
 			productName = ScreenCaptureDemo;
 			productReference = BB9A6DC62EAC691A001279F1 /* ScreenCaptureDemo.app */;
@@ -168,6 +211,9 @@
 			);
 			mainGroup = BB9A6DBD2EAC691A001279F1;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				BBA971752F0CBB20001672B0 /* XCRemoteSwiftPackageReference "ConeMacKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BB9A6DC72EAC691A001279F1 /* Products */;
 			projectDirPath = "";
@@ -184,6 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB9A6DDD2EAC692D001279F1 /* Assets.xcassets in Resources */,
+				BBA971702F0CA964001672B0 /* NewRecord.storyboard in Resources */,
 				BB9A6DDE2EAC692D001279F1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -198,18 +245,25 @@
 				BB6EE4FF2EBC8C5A0091300C /* MP4Writer.swift in Sources */,
 				BB9A6DDF2EAC692D001279F1 /* AppDelegate.swift in Sources */,
 				BB70E84D2EB246E400360647 /* ScreenCapture.swift in Sources */,
+				BBA9717F2F0CEB14001672B0 /* SelectionWindow.swift in Sources */,
 				BB6ACBD02ED7FF7B001FFDBE /* MouseEventWriter.swift in Sources */,
 				BB9A6DE02EAC692D001279F1 /* ViewController.swift in Sources */,
 				BB6ACBCC2ED5AA19001FFDBE /* JSONLineWriter.swift in Sources */,
 				BB6ACBCA2ED5A9B6001FFDBE /* MouseEventCapture.swift in Sources */,
+				BBA971792F0CBBE0001672B0 /* NewRecordViewController.swift in Sources */,
 				BB70E84B2EB245CD00360647 /* DataFlow.swift in Sources */,
+				BBA971742F0CB916001672B0 /* MainWindowController.swift in Sources */,
 				BB9A6DE52EAC77B2001279F1 /* MediaStream.swift in Sources */,
+				BBA9717D2F0CE688001672B0 /* CaptureSelectionContext.swift in Sources */,
 				BB7F553D2ED4300C0084FCB9 /* MediaWorkspace.swift in Sources */,
+				BBA971722F0CB106001672B0 /* AppWindowCoordinator.swift in Sources */,
 				BB6ACBCE2ED6EF53001FFDBE /* AudioCapture.swift in Sources */,
 				BB70E8492EB0F85C00360647 /* Controllable.swift in Sources */,
 				BB7F553B2ED409FD0084FCB9 /* MediaCaptureSession.swift in Sources */,
 				BB9A6DE22EAC6944001279F1 /* ScreenRecorder.swift in Sources */,
 				BB6ACBD22ED82778001FFDBE /* CursorImageWriter.swift in Sources */,
+				BBA971812F0CF8D5001672B0 /* SelectionOverlayView.swift in Sources */,
+				BBA9716E2F0CA956001672B0 /* NewRecordWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +489,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BBA971752F0CBB20001672B0 /* XCRemoteSwiftPackageReference "ConeMacKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Vesincc/ConeMacKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BBA971762F0CBB20001672B0 /* ConeMacKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BBA971752F0CBB20001672B0 /* XCRemoteSwiftPackageReference "ConeMacKit" */;
+			productName = ConeMacKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BB9A6DBE2EAC691A001279F1 /* Project object */;
 }

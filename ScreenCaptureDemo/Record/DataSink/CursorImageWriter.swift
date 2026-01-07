@@ -37,19 +37,22 @@ class CursorImageWriter: DataSink<Encodable> {
             guard self.writedIds[event.cursorId] == nil else {
                 return
             }
-            let image = cursor.image
-            let named = event.cursorId + ".png"
-            let fileUrl = self.folder.appendingPathComponent(named)
-            guard let tiffData = image.tiffRepresentation,
-                  let bitmap = NSBitmapImageRep(data: tiffData),
-                  let pngData = bitmap.representation(using: .png, properties: [:]) else {
-                return
-            }
-            do {
-                try pngData.write(to: fileUrl)
-                self.writedIds[event.cursorId] = true
-            } catch {
-                print("cursor write error: \(error)")
+            
+            autoreleasepool {
+                let image = cursor.image
+                let named = event.cursorId + ".png"
+                let fileUrl = self.folder.appendingPathComponent(named)
+                guard let tiffData = image.tiffRepresentation,
+                      let bitmap = NSBitmapImageRep(data: tiffData),
+                      let pngData = bitmap.representation(using: .png, properties: [:]) else {
+                    return
+                }
+                do {
+                    try pngData.write(to: fileUrl)
+                    self.writedIds[event.cursorId] = true
+                } catch {
+                    print("cursor write error: \(error)")
+                }
             }
         }
         return true

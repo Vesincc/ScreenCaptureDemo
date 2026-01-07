@@ -7,6 +7,7 @@
 
 import Cocoa
 import AVFoundation
+import ConeMacKit
 
 class ViewController: NSViewController {
 
@@ -16,7 +17,8 @@ class ViewController: NSViewController {
     
     
     override func viewDidLoad() {
-        super.viewDidLoad() 
+        super.viewDidLoad()
+        
         print("devices: \(AVCaptureDevice.default(for: .audio))")
     }
     
@@ -26,6 +28,7 @@ class ViewController: NSViewController {
         session?.start { result in
             print("ViewController: \(result)")
         }
+        
     }
     
     @IBAction func stopAction(_ sender: Any) {
@@ -33,6 +36,16 @@ class ViewController: NSViewController {
             print("ViewController: \(result)")
             self?.session = nil
         }
+    }
+    
+    
+    
+    
+    @IBAction func newRecordAction(_ sender: Any) {
+        let storyboard = NSStoryboard(name: "NewRecord", bundle: nil)
+        let windowController = storyboard.instantiateController(withIdentifier: "NewRecordWindowController") as! NewRecordWindowController
+        AppWindowCoordinator.shared.activate(windowController)
+        windowController.window?.alignment(.bottom, offset: CGPoint(x: 0, y: 100))
     }
     
 }
