@@ -39,7 +39,7 @@ class SelectionWindow: NSPanel {
             let mouseLocation = NSEvent.mouseLocation
             self?.updateOverlay(mouseLocation: mouseLocation)
             return event
-        }) 
+        })
     }
     
     deinit {
@@ -51,95 +51,76 @@ class SelectionWindow: NSPanel {
      
     
     func updateOverlay(mouseLocation: CGPoint) {
-        guard let screen = NSScreen.screens.first(where: { NSMouseInRect(mouseLocation, $0.frame, false) }) else {
-            fatalError("No screen found under mouse")
-        }
-        let windows = sharingWindows()
-        print("windows: \(windows)")
-        
-        let hoveredWindow = windows
-            .first { $0.frame.contains(mouseLocation) }
+        let windows = sharingWindows(at: mouseLocation)
          
         if overlay.superview == nil {
             contentView?.addSubview(overlay)
         }
         
-        if let window = hoveredWindow {
+        if let window = windows.first {
             overlay.frame = convertFromScreen(window.frame)
         }
     }
     
-    func sharingWindows() -> [SharingWindow] {
-        guard let windowInfoList = CGWindowListCopyWindowInfo(
-            [.optionOnScreenOnly, .excludeDesktopElements],
-            kCGNullWindowID
-        ) as? [[String: Any]] else {
+    func sharingWindows(at mouseLocation: CGPoint) -> [SharingWindow] {
+        guard let windowInfoList = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]] else {
             return []
         }
         let myPID = NSRunningApplication.current.processIdentifier
         let results: [SharingWindow] = windowInfoList.compactMap { dict in
-            guard let onscreen = dict[kCGWindowIsOnscreen as String] as? Bool, onscreen else {
+            guard let pid = dict[kCGWindowOwnerPID as String] as? pid_t,
+                  let windowRect = getWindowRect(from: dict),
+                  let appName = dict[kCGWindowOwnerName as String] as? String,
+                  let windowId = dict[kCGWindowNumber as String] as? CGWindowID,
+                  let layer = dict[kCGWindowLayer as String] as? Int else {
                 return nil
             }
             
-            if let pid = dict[kCGWindowOwnerPID as String] as? pid_t,
-               pid == myPID {
+            /// 排除系统窗口
+            if layer != 0 {
                 return nil
             }
             
-            if let layer = dict[kCGWindowLayer as String] as? Int, layer != 0 {
+            guard pid != myPID else {
                 return nil
             }
+             
+            let windowName = dict[kCGWindowName as String] as? String
             
-            if let sharing = dict[kCGWindowSharingState as String] as? Int,
-               sharing < 1 {
-                return nil
-            }
-            
-            guard let frame = cgWindowFrame(from: dict) else {
-                return nil
-            }
-            
-            guard let windowID = dict[kCGWindowNumber as String] as? CGWindowID else {
-                return nil
-            }
-            
-            let pid = dict[kCGWindowOwnerPID as String] as? pid_t ?? 0
-            let ownerName = dict[kCGWindowOwnerName as String] as? String ?? ""
-            let title = dict[kCGWindowName as String] as? String
-            
+            let mainDisplayBounds = CGDisplayBounds(CGMainDisplayID())
+            let windowFrame = CGRect(origin: CGPoint(x: windowRect.origin.x, y: mainDisplayBounds.height - windowRect.maxY), size: windowRect.size)
+                   
             let app = NSRunningApplication(processIdentifier: pid)
-            
-            return SharingWindow(
-                windowID: windowID,
-                frame: frame,
-                ownerPID: pid,
-                ownerName: ownerName,
-                ownerIcon: app?.icon,
-                title: title
-            )
+            return SharingWindow(windowId: windowId, windowName: windowName, frame: windowFrame, pid: pid, appName: appName, appIcon: app?.icon)
         }
-        return results
+        return results.filter({ $0.frame.contains(mouseLocation) })
     }
     
-    private func cgWindowFrame(from dict: [String: Any]) -> CGRect? {
+    private func getWindowRect(from dict: [String: Any]) -> CGRect? {
         guard let bounds = dict[kCGWindowBounds as String] as? [String: Any],
-              let x = bounds["X"] as? CGFloat,
-              let y = bounds["Y"] as? CGFloat,
-              let w = bounds["Width"] as? CGFloat,
-              let h = bounds["Height"] as? CGFloat else {
+              let x = bounds["X"] as? NSNumber,
+              let y = bounds["Y"] as? NSNumber,
+              let w = bounds["Width"] as? NSNumber,
+              let h = bounds["Height"] as? NSNumber else {
             return nil
         }
-        return CGRect(x: x, y: y, width: w, height: h)
+        
+        return CGRect(
+            x: x.doubleValue,
+            y: y.doubleValue,
+            width: w.doubleValue,
+            height: h.doubleValue
+        )
     }
     
 }
 
 struct SharingWindow {
-    let windowID: CGWindowID
+    let windowId: CGWindowID
+    let windowName: String?
     let frame: CGRect
-    let ownerPID: pid_t
-    let ownerName: String
-    let ownerIcon: NSImage?
-    let title: String?
+    
+    let pid: pid_t
+    let appName: String
+    let appIcon: NSImage?
 }

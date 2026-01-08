@@ -1,0 +1,15 @@
+{
+  "originHash" : "14a399040a4343efa54e1ef0f42504e9b8a51c51cf7baf0ad483a74acbf17b5f",
+  "pins" : [
+    {
+      "identity" : "conemackit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Vesincc/ConeMacKit",
+      "state" : {
+        "revision" : "e0bc45c6f1f1f566b594b63552fd29b30a621f69",
+        "version" : "1.2.4"
+      }
+    }
+  ],
+  "version" : 3
+}
